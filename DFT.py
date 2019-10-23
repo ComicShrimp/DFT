@@ -46,4 +46,5 @@ if usarGraph:
   plt.grid(True)
   plt.plot(senoGrafico, color='tab:orange', linestyle = '--', marker='o')
 
+  # Apresenta o Gráfico
   plt.show()
