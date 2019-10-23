@@ -7,7 +7,7 @@ def funcaoXn(m):
 
 
 usarGraph = False
-if input('Usar Gráfico(Requer Maplotlib): ') == 's':
+if input('Usar Gráfico(Requer Maplotlib) (S/N) : ') == 's':
     import matplotlib.pyplot as plt
     usarGraph = True
 
@@ -15,8 +15,9 @@ quantidadeDePontos = int(input('Digite a Quantidade de Pontos: '))
 
 senoGrafico = []
 cossenoGrafico = []
+magnitudeGrafico = []
 for m in range(0, quantidadeDePontos):
-    cosseno = seno = 0
+    cosseno = seno = magnitude = 0
 
     for n in range(0, quantidadeDePontos):
         # Calcula somente o valor de seno e cosseno, após isso, acrescentar j na hora de mostrar
@@ -25,26 +26,35 @@ for m in range(0, quantidadeDePontos):
         seno += math.sin((2 * math.pi * m * n) /
                          quantidadeDePontos) * funcaoXn(n)
 
+    magnitude = math.sqrt(math.pow(cosseno, 2) + math.pow(seno, 2))
+
     cossenoGrafico.append(cosseno)
     senoGrafico.append(seno)
+    magnitudeGrafico.append(magnitude)
 
     # Necessário por conta do sinal na equação
     seno = seno * -1
-    print('X[{}] = {:^6.2f} {:>2} {:>6.2f}j'.format(
-        m, cosseno, '+' if seno >= 0 else '-', seno if seno > 0 else seno * -1))
+    print('X[{}] = {:^6.2f} {:>2} {:>6.2f}j | Xm[{}] = {}'.format(
+        m, cosseno, '+' if seno >= 0 else '-', seno if seno > 0 else seno * -1, m, magnitude))
 
 if usarGraph:
-  # Grafico Parte Real
-  plt.subplot(1, 2, 1)
-  plt.title('Parte Real')
-  plt.grid(True)
-  plt.plot(cossenoGrafico, 'o--')
+    # Grafico Parte Real
+    plt.subplot(2, 2, 1)
+    plt.title('Parte Real')
+    plt.grid(True)
+    plt.plot(cossenoGrafico, 'o--')
 
-  # Gráfico Parte Imaginaria
-  plt.subplot(1, 2, 2)
-  plt.title('Parte Imaginária')
-  plt.grid(True)
-  plt.plot(senoGrafico, color='tab:orange', linestyle = '--', marker='o')
+    # Gráfico Parte Imaginaria
+    plt.subplot(2, 2, 2)
+    plt.title('Parte Imaginária')
+    plt.grid(True)
+    plt.plot(senoGrafico, color='tab:orange', linestyle='--', marker='o')
 
-  # Apresenta o Gráfico
-  plt.show()
+    # Grafico de Magnitude
+    plt.subplot(2, 2, 3)
+    plt.title('Magnitude')
+    plt.grid(True)
+    plt.plot(magnitudeGrafico, color='tab:red', linestyle='--', marker='o')
+
+    # Apresenta o Gráfico
+    plt.show()
